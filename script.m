@@ -19,6 +19,7 @@ params.nIter = 1500; % Only do 10 passes through the data for the demo.
 params.save = 0; % Do not save the network on disk for the demo.
 params.wdType = 0;
 params.startLR = 0.01;
+params.adaptive = 1;
 %params.func = 'tanh';
 
 % 3 - Split the dataset into train+valid and test.

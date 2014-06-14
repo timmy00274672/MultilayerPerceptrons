@@ -33,6 +33,25 @@ Execute `showRegion` and get :
 
 ![region](https://raw.githubusercontent.com/timmy00274672/MultilayerPerceptrons/master/img/region.jpg)
 
+### Adaptive BP algorithm
+
+Use adaptive BP algorithm, just set the `params.adaptive = 1;`
+
+Error versus the number of iterations:
+
+![error_iteration_adaptive](https://raw.githubusercontent.com/timmy00274672/MultilayerPerceptrons/master/img/error_iteration_adaptive.jpg)
+
+And we get:
+
+```
+	Test classification error rate: 0%
+```
+
+Execute `showRegion` and get :
+
+![region_adaptive](https://raw.githubusercontent.com/timmy00274672/MultilayerPerceptrons/master/img/region_adaptive.jpg)
+
+
 ## Reference
 
 - [Neural networks](http://lab.fs.uni-lj.si/lasin/?page_id=29&lang=en)

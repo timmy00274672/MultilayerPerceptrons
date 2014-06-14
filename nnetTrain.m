@@ -11,19 +11,49 @@ for i = 1:nIter
 		
 		% Forward propagation.
 		layers = fprop(layers, train(j).data);
-		
+        
+        if(params.adaptive)
+            if(isfield(train(j), 'errors')) 
+                preCost = train(j).errors;
+            end
+        end
+        
 		% Computing the training error and check for NaNs.
 		[train(j).errors gradOutput] = computeCost(layers, train(j).labels, params.cost);
+        if(params.adaptive)
+            if (~exist('preCost'))
+                preCost = train(j).errors;
+            end
+        end
+        
 		if sum(isnan(gradOutput(:)))
 			fprintf('NaNs have been found.');
 			keyboard;
-		end
+        end
 		
+        if(params.adaptive)
+            if(~isfield(params, 'eps'))
+                params.eps = params.startLR;
+            else
+                if(sum(train(j).errors)<sum(preCost))
+                    params.eps = 1.05 * params.eps;
+                elseif(sum(train(j).errors)>1.04 * sum(preCost))
+                    params.eps = 0.7 * params.eps;
+                end
+            end
+        end
+        
 		% Back-propagation.
 		gradient = bprop(layers, gradient, gradOutput, train(j).data);
 		
+        
+        
 		% Update the parameters of the neural network.
-		layers = nnetUpdate(layers, gradient);
+        if(params.adaptive)
+            layers = nnetUpdate(layers, gradient,params.eps );
+        else
+            layers = nnetUpdate(layers, gradient );
+        end
 		
 		% Extract and display relevant information from the training errors.
 		nnetTrainErrorsCompile;
